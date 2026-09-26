@@ -1,9 +1,21 @@
 # NexusFlow — do not commit secrets, caches, or generated folders
 # Environment and secrets
 .env
-.env.local
-.env.*.local
+.env.*
 !.env.example
+!**/.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+!*.key.example
+secrets/
+credentials.json
+**/service-account*.json
+**/google-credentials*.json
+backend/_login_check.json
+backend/_set_admin.py
+backend/_*.json
 # Python
 .venv/
 venv/

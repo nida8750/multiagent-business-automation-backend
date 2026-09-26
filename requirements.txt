@@ -1,0 +1,2 @@
+# Render installs from repo root — pull backend production deps.
+-r backend/requirements.txt

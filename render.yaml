@@ -1,13 +1,11 @@
-# Render Blueprint — Nexaflow API
-# Dashboard: set Root Directory = backend (or use this file as-is).
+# Render Blueprint — Nexaflow API (monorepo: Root Directory = repository root)
 services:
   - type: web
     name: nexaflow-api
     runtime: python
-    rootDir: backend
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r backend/requirements.txt && python -c "import jwt; print('PyJWT OK', jwt.__version__)"
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
@@ -16,7 +14,10 @@ services:
         value: development
       - key: APP_DEBUG
         value: "true"
-      # Set these in the Render dashboard (do not commit secrets):
+      - key: CELERY_TASK_ALWAYS_EAGER
+        value: "true"
+      - key: AUTH_AUTO_VERIFY
+        value: "true"
       - key: DATABASE_URL
         sync: false
       - key: SUPABASE_URL
@@ -35,7 +36,3 @@ services:
         sync: false
       - key: FRONTEND_ORIGIN
         sync: false
-      - key: CELERY_TASK_ALWAYS_EAGER
-        value: "true"
-      - key: AUTH_AUTO_VERIFY
-        value: "true"
