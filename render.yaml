@@ -1,0 +1,41 @@
+# Render Blueprint — Nexaflow API
+# Dashboard: set Root Directory = backend (or use this file as-is).
+services:
+  - type: web
+    name: nexaflow-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: APP_ENV
+        value: development
+      - key: APP_DEBUG
+        value: "true"
+      # Set these in the Render dashboard (do not commit secrets):
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PROJECT_REF
+        sync: false
+      - key: SUPABASE_DB_PASSWORD
+        sync: false
+      - key: SUPABASE_DB_HOST
+        sync: false
+      - key: SUPABASE_DB_USER
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: CELERY_TASK_ALWAYS_EAGER
+        value: "true"
+      - key: AUTH_AUTO_VERIFY
+        value: "true"
