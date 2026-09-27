@@ -1,2 +1,5 @@
-# Render installs from repo root — pull backend production deps.
+# If Render Root Directory is the repo root, use:
+#   pip install -r backend/requirements.txt
+# If Root Directory is `backend` (recommended), use:
+#   pip install -r requirements.txt
 -r backend/requirements.txt

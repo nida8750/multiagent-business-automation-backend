@@ -1,11 +1,12 @@
-# Render Blueprint — Nexaflow API (monorepo: Root Directory = repository root)
+# Render Blueprint — Root Directory must be `backend`
 services:
   - type: web
     name: nexaflow-api
     runtime: python
+    rootDir: backend
     plan: free
-    buildCommand: pip install -r backend/requirements.txt && python -c "import jwt; print('PyJWT OK', jwt.__version__)"
-    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r requirements.txt && python -c "import jwt; print('PyJWT OK', jwt.__version__)"
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
